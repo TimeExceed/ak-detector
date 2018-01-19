@@ -7,7 +7,9 @@ import sys
 import hashlib
 
 AK_PAT = re.compile(b'\\b[0-9a-zA-Z]{16,30}\\b')
-WHITE_LIST = set([b'BetweenCardinalityImpl'])
+NUMERIC_PAT = re.compile(b'\\b\\d+\\b')
+ALL_ALPHABET_PAT = re.compile(b'\\b[a-zA-Z]+\\b')
+WHITE_LIST = set([b'leftSmallThan100G'])
 
 def get_remote_branches():
     stdout = sp.check_output(['git', 'branch', '--all'])
@@ -40,7 +42,7 @@ def check_commit(commit, checked_files):
             m = AK_PAT.search(content)
             if m:
                 text = m.group(0)
-                if text not in WHITE_LIST:
+                if text not in WHITE_LIST and not NUMERIC_PAT.match(text) and not ALL_ALPHABET_PAT.match(text):
                     print(text, file=sys.stderr)
                     return fn
             checked_files.add(digest)
