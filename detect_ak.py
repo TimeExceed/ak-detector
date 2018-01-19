@@ -6,7 +6,7 @@ import re
 import sys
 import hashlib
 
-AK_PAT = re.compile(b'\b[0-9a-zA-Z]{16,30}\b')
+AK_PAT = re.compile(b'\\b[0-9a-zA-Z]{16,30}\\b')
 WHITE_LIST = set([b'BetweenCardinalityImpl'])
 
 def get_remote_branches():
